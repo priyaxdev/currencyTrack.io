@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Currency converter</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <div class="navbar">
+        <div class="logo">
+          <div class="icon">
+            <img
+              src="./assets/images/logo.svg"
+              alt="FX Checker"
+              class="navbar__logo"
+            />
+          </div>
+        </div>
+        <div>55 currencies EOD . ECB Data</div>
+      </div>
+      <div class="ticker">
+        <div class="navbar-sec2">
+          <span class="live-market"><span class="dot"></span> Live Market</span>
+        </div>
+        <div class="list">
+          <ul>
+            <li class="ticker-item">
+              <span class="ticker-item-pair">USD/JPY</span>
+              <span class="ticker-item-rate">157.91</span>
+              <span class="ticker-item-change ticker-item-change-up"
+                >▲ +0.04%</span
+              >
+            </li>
+            <li class="ticker-item">
+              <span class="ticker-item-pair">USD/JPY</span>
+              <span class="ticker-item-rate">157.91</span>
+              <span class="ticker-item-change ticker-item-change-up"
+                >▲ +0.04%</span
+              >
+            </li>
+            <li class="ticker-item">
+              <span class="ticker-item-pair">USD/JPY</span>
+              <span class="ticker-item-rate">157.91</span>
+              <span class="ticker-item-change ticker-item-change-down"
+                >▲ +0.04%</span
+              >
+            </li>
+            <li class="ticker-item">
+              <span class="ticker-item-pair">USD/JPY</span>
+              <span class="ticker-item-rate">157.91</span>
+              <span class="ticker-item-change ticker-item-change-up"
+                >▲ +0.04%</span
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </header>
+    <main>
+      <h1 class="hero-title">Check the Rate</h1>
+      <div class="converter">
+        <div class="converter-panels">
+          <div class="send-box card">
+            <span class="text">send</span>
+            <div class="inner-card">
+              <span class="amount">amount</span>
+              <button class="currency-select">
+                <img src="flags.svg" alt="USD" class="flag" />
+                <span>USD</span>
+                <img
+                  src="./assets/images/icon-chevron-down.svg"
+                  alt=""
+                  class="chevron"
+                />
+              </button>
+            </div>
+          </div>
+          <button class="swap">
+            <img
+              src="./assets/images/icon-arrow-right.svg"
+              alt="Icon-arrow-right"
+              class="right-arrow arrow"
+            />
+            <img
+              src="./assets/images/icon-arrow-right.svg"
+              alt="Icon-arrow-right"
+              class="left-arrow arrow"
+            />
+          </button>
+          <div class="receive-box card">
+            <span class="text">Receive</span>
+            <div class="inner-card">
+              <span class="amount">amount</span>
+              <button class="currency-select">
+                <img src="flags.svg" alt="USD" class="flag" />
+                <span>USD</span>
+                <img
+                  src="./assets/images/icon-chevron-down.svg"
+                  alt=""
+                  class="chevron"
+                />
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="currency-picker">
+          <input
+            type="text"
+            placeholder="Search currencies..."
+            class="picker-search"
+          />
+          <div class="picker-group">
+            <span class="picker-group-label">Popular</span>
+            <ul class="picker-list">
+              <li class="picker-item">
+                <img src="./assets/images/flags.svg" alt="" class="flag" />
+                <span class="picker-item-code">USD</span>
+                <span class="picker-item-name">US Dollar</span>
+                <img
+                  src="./assets/images/icon-check.svg"
+                  alt="Selected"
+                  class="check"
+                />
+              </li>
+              <li class="picker-item">
+                <img src="./assets/images/flags.svg" alt="" class="flag" />
+                <span class="picker-item-code">EUR</span>
+                <span class="picker-item-name">Euro</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="converter-footer">
+          <span class="rate">1USD=100rs</span>
+          <div class="converter-actions">
+            <button class="favourites btn">
+              <img
+                src="./assets/images/icon-star-filled.svg"
+                alt="Icon-star"
+                class="star"
+              />
+              Favorited
+            </button>
+            <button class="log-button btn">Log Conversion</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="tabs">
+        <button class="tab tab--active">History</button>
+        <button class="tab">Compare</button>
+        <button class="tab">Favorites <span class="badge">10</span></button>
+        <button class="tab">Log <span class="badge">8</span></button>
+      </div>
+
+      <div class="history-panel">
+        <div class="history-header">
+          <div class="stats">
+            <div class="stat">
+              <span class="stat-label">Open</span>
+              <span class="stat-value">0.8516</span>
+            </div>
+            <div class="stat">
+              <span class="stat-label">Last</span>
+              <span class="stat-value">0.8530</span>
+            </div>
+            <div class="stat">
+              <span class="stat-label">Change</span>
+              <span class="stat-value stat-value--positive">+0.0014</span>
+            </div>
+            <div class="stat">
+              <span class="stat-label">% Change</span>
+              <span class="stat-value stat-value--positive">▲ +0.16%</span>
+            </div>
+          </div>
+
+          <div class="range-selector">
+            <button class="range-btn">1D</button>
+            <button class="range-btn">1W</button>
+            <button class="range-btn range-btn--active">1M</button>
+            <button class="range-btn">3M</button>
+            <button class="range-btn">1Y</button>
+            <button class="range-btn">5Y</button>
+          </div>
+        </div>
+
+        <div class="chart-box">
+          <p class="chart-placeholder">Chart goes here</p>
+        </div>
+      </div>
+      <div class="compare-panel">
+        <div class="compare-header">
+          <div>
+            <span class="compare-title">Multi-currency</span>
+            <span class="compare-subtitle">1,000 from USD</span>
+          </div>
+          <span class="compare-count">8 pairs</span>
+        </div>
+
+        <ul class="compare-list">
+          <li class="compare-item">
+            <img src="./assets/images/flags.svg" alt="" class="flag" />
+            <div class="compare-item-info">
+              <span class="compare-item-code">EUR</span>
+              <span class="compare-item-name">Euro</span>
+            </div>
+            <div class="compare-item-values">
+              <span class="compare-amount">853.02</span>
+              <span class="compare-ref">@ 0.8530</span>
+            </div>
+            <button class="pin-btn">
+              <img src="./assets/images/icon-star-filled.svg" alt="Pin" />
+            </button>
+          </li>
+        </ul>
+      </div>
+      <div class="favorites-panel">
+        <div class="favorites-header">
+          <span class="favorites-title">Pinned pairs</span>
+          <span class="favorites-count">10 favorites</span>
+        </div>
+
+        <ul class="favorites-list">
+          <li class="favorite-item">
+            <span class="favorite-pair">USD → EUR</span>
+            <span class="favorite-rate">0.8530</span>
+            <span class="favorite-change favorite-change--positive"
+              >▲ +0.11%</span
+            >
+            <button class="unpin-btn">
+              <img src="./assets/images/icon-star-filled.svg" alt="Unpin" />
+            </button>
+          </li>
+        </ul>
+
+        <div class="empty-state">
+          <p class="empty-state-title">No pinned pairs yet</p>
+          <p class="empty-state-text">
+            Pin a pair to track its rate here. Tap the star icon on any
+            conversion or comparison row.
+          </p>
+        </div>
+      </div>
+
+      <div class="log-panel">
+        <div class="log-header">
+          <div>
+            <span class="log-title">Conversion log</span>
+            <span class="log-count">8 logged</span>
+          </div>
+          <button class="clear-all-btn">Clear all</button>
+        </div>
+
+        <ul class="log-list">
+          <li class="log-item">
+            <span class="log-time">20m</span>
+            <span class="log-pair">USD → EUR</span>
+            <div class="log-amounts">
+              <span class="log-send">1,000 USD</span>
+              <span class="log-receive">853.02 EUR</span>
+            </div>
+            <button class="delete-btn">
+              <img src="./assets/images/icon-delete.svg" alt="Delete" />
+            </button>
+          </li>
+        </ul>
+
+        <div class="empty-state">
+          <p class="empty-state-title">No conversions logged yet</p>
+          <p class="empty-state-text">
+            Every conversion is recorded here automatically when you tap Log
+            conversion. Your log is private to this session and this browser.
+          </p>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>
