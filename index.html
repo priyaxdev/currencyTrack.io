@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Currency converter</title>
     <link rel="stylesheet" href="style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js" defer></script>
   </head>
   <body>
     <header>
@@ -65,15 +67,14 @@
           <div class="send-box card">
             <span class="text">send</span>
             <div class="inner-card">
-              <span class="amount">amount</span>
+              <form>
+                <label for="send-amount">Amount</label>
+                <input type="text" id="send-amount" class="amount-input" name="send-amount">
+              </form>
+
               <button class="currency-select">
-                <img src="flags.svg" alt="USD" class="flag" />
+                <p></p>
                 <span>USD</span>
-                <img
-                  src="./assets/images/icon-chevron-down.svg"
-                  alt=""
-                  class="chevron"
-                />
               </button>
             </div>
           </div>
@@ -92,21 +93,21 @@
           <div class="receive-box card">
             <span class="text">Receive</span>
             <div class="inner-card">
-              <span class="amount">amount</span>
-              <button class="currency-select">
-                <img src="flags.svg" alt="USD" class="flag" />
+                <form>
+                <label for="receive-amount">Amount</label>
+                <input type="text" id="receive-amount" class="amount-input" name="receive-amount">
+              </form>
+                           <button class="currency-select">
+                <p></p>
                 <span>USD</span>
-                <img
-                  src="./assets/images/icon-chevron-down.svg"
-                  alt=""
-                  class="chevron"
-                />
               </button>
             </div>
           </div>
+            </div>
+          </div>
         </div>
-
-        <div class="currency-picker">
+       
+        <!-- <div class="currency-picker">
           <input
             type="text"
             placeholder="Search currencies..."
@@ -132,22 +133,35 @@
               </li>
             </ul>
           </div>
-        </div>
+        </div> -->
+
+        <div class="currency-dropdown hidden">
+              <input
+              type="text"
+              class="currency-search"
+              placeholder="Search currencies..."
+          >
+
+          <ul class="currency-list">
+          </ul>
+
+      </div>
 
         <div class="converter-footer">
-          <span class="rate">1USD=100rs</span>
-          <div class="converter-actions">
-            <button class="favourites btn">
-              <img
-                src="./assets/images/icon-star-filled.svg"
-                alt="Icon-star"
-                class="star"
-              />
-              Favorited
-            </button>
-            <button class="log-button btn">Log Conversion</button>
-          </div>
-        </div>
+  <p class="conversion-rate">
+    <span class="rate">1</span>
+    <span class="fromFoot">USD</span>
+    <span class="equal">=</span>
+    <span class="rateValue">95.62</span>
+    <span class="toFoot">INR</span>
+  </p>
+
+  <div class="converter-actions">
+    <button class="favourites btn">
+      ⭐ Favourite
+    </button>
+  </div>
+</div>
       </div>
 
       <div class="tabs">
@@ -186,10 +200,8 @@
             <button class="range-btn">1Y</button>
             <button class="range-btn">5Y</button>
           </div>
-        </div>
-
-        <div class="chart-box">
-          <p class="chart-placeholder">Chart goes here</p>
+        <div class="chart-container">
+           <canvas id="currencyChart"></canvas>
         </div>
       </div>
       <div class="compare-panel">
