@@ -164,131 +164,168 @@
 </div>
       </div>
 
-      <div class="tabs">
-        <button class="tab tab--active">History</button>
-        <button class="tab">Compare</button>
-        <button class="tab">Favorites <span class="badge">10</span></button>
-        <button class="tab">Log <span class="badge">8</span></button>
+<div class="tabs">
+  <button class="tab tab--active" data-panel="history">
+    History
+  </button>
+
+  <button class="tab compare" data-panel="compare">
+    Compare
+  </button>
+
+  <button class="tab fav " data-panel="favorites">
+    Favorites <span class="badge" id="favoritesBadge">0</span>
+  </button>
+
+  <button class="tab log" data-panel="log">
+    Log <span class="badge" id="logBadge">0</span>
+  </button>
+</div>
+
+<!-- ================= HISTORY ================= -->
+
+<section class="history-panel panel active">
+  <div class="history-header">
+    <div class="stats">
+      <div class="stat">
+        <span class="stat-label">Open</span>
+        <span class="stat-value">0.8516</span>
       </div>
 
-      <div class="history-panel">
-        <div class="history-header">
-          <div class="stats">
-            <div class="stat">
-              <span class="stat-label">Open</span>
-              <span class="stat-value">0.8516</span>
-            </div>
-            <div class="stat">
-              <span class="stat-label">Last</span>
-              <span class="stat-value">0.8530</span>
-            </div>
-            <div class="stat">
-              <span class="stat-label">Change</span>
-              <span class="stat-value stat-value--positive">+0.0014</span>
-            </div>
-            <div class="stat">
-              <span class="stat-label">% Change</span>
-              <span class="stat-value stat-value--positive">▲ +0.16%</span>
-            </div>
-          </div>
-
-          <div class="range-selector">
-            <button class="range-btn">1D</button>
-            <button class="range-btn">1W</button>
-            <button class="range-btn range-btn--active">1M</button>
-            <button class="range-btn">3M</button>
-            <button class="range-btn">1Y</button>
-            <button class="range-btn">5Y</button>
-          </div>
-        <div class="chart-container">
-           <canvas id="currencyChart"></canvas>
-        </div>
-      </div>
-      <div class="compare-panel">
-        <div class="compare-header">
-          <div>
-            <span class="compare-title">Multi-currency</span>
-            <span class="compare-subtitle">1,000 from USD</span>
-          </div>
-          <span class="compare-count">8 pairs</span>
-        </div>
-
-        <ul class="compare-list">
-          <li class="compare-item">
-            <img src="./assets/images/flags.svg" alt="" class="flag" />
-            <div class="compare-item-info">
-              <span class="compare-item-code">EUR</span>
-              <span class="compare-item-name">Euro</span>
-            </div>
-            <div class="compare-item-values">
-              <span class="compare-amount">853.02</span>
-              <span class="compare-ref">@ 0.8530</span>
-            </div>
-            <button class="pin-btn">
-              <img src="./assets/images/icon-star-filled.svg" alt="Pin" />
-            </button>
-          </li>
-        </ul>
-      </div>
-      <div class="favorites-panel">
-        <div class="favorites-header">
-          <span class="favorites-title">Pinned pairs</span>
-          <span class="favorites-count">10 favorites</span>
-        </div>
-
-        <ul class="favorites-list">
-          <li class="favorite-item">
-            <span class="favorite-pair">USD → EUR</span>
-            <span class="favorite-rate">0.8530</span>
-            <span class="favorite-change favorite-change--positive"
-              >▲ +0.11%</span
-            >
-            <button class="unpin-btn">
-              <img src="./assets/images/icon-star-filled.svg" alt="Unpin" />
-            </button>
-          </li>
-        </ul>
-
-        <div class="empty-state">
-          <p class="empty-state-title">No pinned pairs yet</p>
-          <p class="empty-state-text">
-            Pin a pair to track its rate here. Tap the star icon on any
-            conversion or comparison row.
-          </p>
-        </div>
+      <div class="stat">
+        <span class="stat-label">Last</span>
+        <span class="stat-value">0.8530</span>
       </div>
 
-      <div class="log-panel">
-        <div class="log-header">
-          <div>
-            <span class="log-title">Conversion log</span>
-            <span class="log-count">8 logged</span>
-          </div>
-          <button class="clear-all-btn">Clear all</button>
-        </div>
-
-        <ul class="log-list">
-          <li class="log-item">
-            <span class="log-time">20m</span>
-            <span class="log-pair">USD → EUR</span>
-            <div class="log-amounts">
-              <span class="log-send">1,000 USD</span>
-              <span class="log-receive">853.02 EUR</span>
-            </div>
-            <button class="delete-btn">
-              <img src="./assets/images/icon-delete.svg" alt="Delete" />
-            </button>
-          </li>
-        </ul>
-
-        <div class="empty-state">
-          <p class="empty-state-title">No conversions logged yet</p>
-          <p class="empty-state-text">
-            Every conversion is recorded here automatically when you tap Log
-            conversion. Your log is private to this session and this browser.
-          </p>
-        </div>
+      <div class="stat">
+        <span class="stat-label">Change</span>
+        <span class="stat-value stat-value--positive">
+          +0.0014
+        </span>
       </div>
+
+      <div class="stat">
+        <span class="stat-label">% Change</span>
+        <span class="stat-value stat-value--positive">
+          ▲ +0.16%
+        </span>
+      </div>
+
+    </div>
+
+    <div class="range-selector">
+      <button class="range-btn" data-range="1">1D</button>
+      <button class="range-btn" data-range="7">1W</button>
+      <button class="range-btn range-btn--active" data-range="30">1M</button>
+      <button class="range-btn" data-range="90">3M</button>
+      <button class="range-btn" data-range="365">1Y</button>
+      <button class="range-btn" data-range="1826">5Y</button>
+    </div>
+
+  </div>
+
+  <div class="chart-container">
+    <canvas id="currencyChart"></canvas>
+  </div>
+
+</section>
+
+<!-- ================= COMPARE ================= -->
+
+<section class="compare-panel panel">
+
+  <div class="compare-header">
+    <div>
+      <span class="compare-title">Multi-currency</span>
+      <span class="compare-subtitle">1000 USD</span>
+    </div>
+
+    <span class="compare-count">
+      <span id="compareCount">0</span> pairs
+    </span>
+  </div>
+
+  <ul class="compare-list" id="compareList"></ul>
+
+</section>
+
+<!-- ================= FAVORITES ================= -->
+
+<section class="favorites-panel panel">
+
+  <div class="favorites-header">
+
+    <span class="favorites-title">
+      Favorite Pairs
+    </span>
+
+    <span class="favorites-count" id="favoritesCount">
+      0 Favorites
+    </span>
+
+  </div>
+
+  <ul
+      class="favorites-list"
+      id="favoritesList">
+  </ul>
+
+  <div
+      class="empty-state"
+      id="favoritesEmpty">
+
+      <p class="empty-state-title">
+          No favorite pairs yet
+      </p>
+
+      <p class="empty-state-text">
+          Click the Favourite button after a conversion to save that pair.
+      </p>
+
+  </div>
+
+</section>
+
+<!-- ================= LOG ================= -->
+
+<section class="log-panel panel">
+
+  <div class="log-header">
+
+    <div>
+
+      <span class="log-title">
+        Conversion Log
+      </span>
+
+      <span class="log-count" id="logCount">
+        0 Logged
+      </span>
+
+    </div>
+
+    <button class="clear-all-btn">
+      Clear All
+    </button>
+
+  </div>
+
+  <ul class="log-list" id="logList"></ul>
+
+  <div
+      class="empty-state"
+      id="logEmpty">
+
+      <p class="empty-state-title">
+          No conversions yet
+      </p>
+
+      <p class="empty-state-text">
+          Every conversion will appear here.
+      </p>
+
+  </div>
+</section>
     </main>
   </body>
 </html>

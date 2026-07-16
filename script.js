@@ -12,8 +12,59 @@ const searchInput = document.querySelector(".currency-search");
 const fromFoot = document.querySelector(".fromFoot");
 const rateValue = document.querySelector(".rateValue");
 const toFoot = document.querySelector(".toFoot");
+const dateBtns = document.querySelectorAll(".range-btn");
+const tab = document.querySelectorAll('.tab');
+const favPanel = document.querySelector(".favorites-panel");
+const histPanel = document.querySelector(".history-panel");
+const logPanel = document.querySelector(".log-panel");
+const comPanel = document.querySelector(".compare-panel");
+const panels = document.querySelectorAll('.panel')
 
+console.log(panels);
+
+let chart;
+let selectedRange = 30;
 let currencies = [];
+const today = new Date();
+
+dateBtns.forEach((btn) => {
+   btn.addEventListener("click", () => {
+    dateBtns.forEach((b) => b.classList.remove("range-btn--active"));
+    btn.classList.add('range-btn--active')
+    const range = Number(btn.dataset.range); // '1', '7', '30', etc.
+    selectedRange = range;
+    loadChart()
+  });
+});
+
+tab.forEach((tabBtn) => {
+  tabBtn.addEventListener('click' , ()=> {
+    tab.forEach((x) => x.classList.remove("tab--active"));
+    if (tabBtn.dataset.panel === "history") {
+    }
+    if (tabBtn.dataset.panel === "favorites") {
+    panels.forEach((panel)=> panel.classList.remove('active'))
+     favPanel.classList.add('active')
+    }
+    if (tabBtn.dataset.panel === "history") {
+      panels.forEach((panel) => panel.classList.remove("active"));
+      histPanel.classList.add("active");
+    }
+    if (tabBtn.dataset.panel === "log") {
+      panels.forEach((panel) => panel.classList.remove("active"));
+      logPanel.classList.add("active");
+    }
+    if (tabBtn.dataset.panel === "compare") {
+      panels.forEach((panel) => panel.classList.remove("active"));
+      comPanel.classList.add("active");
+    }
+
+    tabBtn.classList.add("tab--active");
+  })
+})
+
+
+
 // async function loadCon() {
 // const response = await fetch("./data/countries.json");
 // currencies = await response.json();
@@ -86,9 +137,13 @@ function renderCurrencyList(list = currencies) {
       if (currentSelection == "send") {
         sendCurrency = currency;
         updateCurrency(sendCurrencyButton, currency);
+        convertCurrency()
+        loadChart()
       } else {
         receiveCurrency = currency;
         updateCurrency(receiveCurrencyButton, currency);
+        convertCurrency()
+        loadChart()
       }
       closeCurrencyDropdown();
     });
@@ -99,10 +154,13 @@ function swapCurrency() {
   [sendCurrency, receiveCurrency] = [receiveCurrency, sendCurrency];
   updateCurrency(sendCurrencyButton, sendCurrency);
   updateCurrency(receiveCurrencyButton, receiveCurrency);
+
   [sendAmountInput.value, receiveAmountInput.value] = [
     receiveAmountInput.value,
     sendAmountInput.value,
   ];
+   convertCurrency();
+   loadChart();
 }
 
 async function convertCurrency() {
@@ -145,6 +203,114 @@ function searchCurrency(e) {
   renderCurrencyList(filterCurr);
 }
 
+// const ctx = document.getElementById("currencyChart");
+
+// new Chart(ctx, {
+//   type: "line",
+
+//   data: {
+//     labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+
+//     datasets: [
+//       {
+//         label: "USD → INR",
+
+//         data: [85.1, 85.4, 85.3, 85.6, 85.7, 85.5, 85.9],
+//       },
+//     ],
+//   },
+// });
+
+const loadChart = async function () {
+  try{
+   const from = sendCurrency.code;
+  const to = receiveCurrency.code
+  const startDate = today.toISOString().split("T")[0];
+  console.log(startDate)
+  const endDateObj = new Date(today);
+  endDateObj.setDate(endDateObj.getDate() - Number(selectedRange));
+  const endDate = endDateObj.toISOString().split("T")[0];
+  console.log(selectedRange)
+  console.log(endDate)
+  const response = await fetch(
+    `https://api.frankfurter.dev/v1/${endDate}..${startDate}?from=${from}&to=${to}`,
+  );
+  console.log(response);
+  const data = await response.json();
+  console.log(data);
+  const labels = Object.keys(data.rates);
+  const values = Object.values(data.rates).map((rates) => rates[to]);
+  console.log(labels);
+  console.log(values);
+  drawChart(labels, values);
+  }catch(err) {
+    console.log(`the error is ${err}`);
+  }
+  
+};
+
+function drawChart(labels, values) {
+  const ctx = document.getElementById("currencyChart");
+
+  if (chart) {
+    chart.destroy();
+  }
+
+  chart = new Chart(ctx, {
+    type: "line",
+
+    data: {
+      labels: labels,
+
+      datasets: [
+        {
+          label: `${sendCurrency.code} → ${receiveCurrency.code}`,
+          data: values,
+          borderColor: "#C8FF2C",
+          backgroundColor: "rgba(200,255,44,0.15)",
+          fill: true,
+          tension: 0.4,
+          pointRadius: 3,
+          pointHoverRadius: 5,
+        },
+      ],
+    },
+
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+
+      plugins: {
+        legend: {
+          labels: {
+            color: "#fff",
+          },
+        },
+      },
+
+      scales: {
+        x: {
+          ticks: {
+            color: "#999",
+          },
+          grid: {
+            color: "#222",
+          },
+        },
+
+        y: {
+          ticks: {
+            color: "#999",
+          },
+          grid: {
+            color: "#222",
+          },
+        },
+      },
+    },
+  });
+}
+
 async function init() {
   const response = await fetch("./data/countries.json");
   currencies = await response.json();
@@ -157,23 +323,6 @@ async function init() {
   updateCurrency(receiveCurrencyButton, receiveCurrency);
 
   convertCurrency();
+  await loadChart();
 }
 init();
-
-const ctx = document.getElementById("currencyChart");
-
-new Chart(ctx, {
-  type: "line",
-
-  data: {
-    labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-
-    datasets: [
-      {
-        label: "USD → INR",
-
-        data: [85.1, 85.4, 85.3, 85.6, 85.7, 85.5, 85.9],
-      },
-    ],
-  },
-});
