@@ -25,6 +25,8 @@ const favlist = document.querySelector(".favorites-list");
 const emptyState = document.getElementById("favoritesEmpty");
 const favBadge = document.querySelector("#favoritesBadge");
 
+let favArr = []
+
 const tickerPairs = [
   { from: "EUR", to: "USD" },
   { from: "USD", to: "JPY" },
@@ -210,44 +212,7 @@ function searchCurrency(e) {
   });
   renderCurrencyList(filterCurr);
 }
-
-function drawChart(labels, values) {
-  const ctx = document.getElementById("currencyChart");
-
-  if (chart) {
-    chart.destroy();
-  }
-
-  chart = new Chart(ctx, {
-    type: "line",
-    data: {
-      labels: labels,
-      datasets: [
-        {
-          label: `${sendCurrency.code} → ${receiveCurrency.code}`,
-          data: values,
-          borderColor: "#C8FF2C",
-          backgroundColor: "rgba(200,255,44,0.15)",
-          fill: true,
-          tension: 0.4,
-          pointRadius: 3,
-          pointHoverRadius: 5,
-        },
-      ],
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: {
-        legend: { labels: { color: "#fff" } },
-      },
-      scales: {
-        x: { ticks: { color: "#999" }, grid: { color: "#222" } },
-        y: { ticks: { color: "#999" }, grid: { color: "#222" } },
-      },
-    },
-  });
-}
+console.log(sendCurrency);
 
 const savingFav = function () {
   const key = `${sendCurrency.code}-${receiveCurrency.code}`;
@@ -255,7 +220,7 @@ const savingFav = function () {
     from: sendCurrency.code,
     to: receiveCurrency.code,
   });
-  const favArr = [...favCurr.values()];
+   favArr = [...favCurr.values()];
   if (favArr.length > 0) {
     emptyState.style.display = "none";
   } else {
@@ -267,16 +232,35 @@ const savingFav = function () {
 
 const renderFav = function (favArr) {
   favlist.innerHTML = "";
+  let index = 0;
   favArr.forEach((fav) => {
     const li = document.createElement("li");
     li.innerHTML = `
       <span>${fav.from} → ${fav.to}</span>
       <button class="delete-btn">Delete</button>
     `;
+    li.setAttribute('data-index' , `${index}` )
     favlist.appendChild(li);
+     index = index + 1;
   });
   favBadge.innerHTML = favArr.length;
 };
+
+
+
+const deleteBtn = document.querySelector(".delete-btn");
+favlist.addEventListener("click", (e) => {
+  if (!e.target.classList.contains("delete-btn")) return;
+
+  const index = Number(e.target.closest("li").dataset.index);
+
+  const item = favArr[index];
+  favCurr.delete(`${item.from}-${item.to}`);
+  favArr = [...favCurr.values()];
+  localStorage.setItem("favorites", JSON.stringify(favArr));
+  renderFav(favArr);
+  emptyState.style.display = favArr.length ? "none" : "block";
+});
 
 async function init() {
   const response = await fetch("./data/countries.json");
@@ -292,13 +276,16 @@ async function init() {
   convertCurrency();
   await loadChart(today, sendCurrency, receiveCurrency, selectedRange);
 
-  const saved = JSON.parse(localStorage.getItem("favorites")) || [];
-  saved.forEach((item) => {
-    favCurr.set(`${item.from}-${item.to}`, item);
-  });
-  renderFav(saved);
+      const saved = JSON.parse(localStorage.getItem("favorites")) || [];
 
-  await loadTicker();
+      saved.forEach((item) => {
+        favCurr.set(`${item.from}-${item.to}`, item);
+      });
+
+      favArr = [...favCurr.values()];
+      renderFav(favArr);
+
+        await loadTicker();
 }
 init();
 
